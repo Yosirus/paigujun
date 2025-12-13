@@ -1,1 +1,1 @@
-# paigujun
+# openclash 分流规则
