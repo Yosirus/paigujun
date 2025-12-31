@@ -384,13 +384,6 @@ rules:
   - RULE-SET,秋风广告规则,广告拦截
 
 
-  - RULE-SET,Google_域,Google
-  - RULE-SET,Google_IP,Google,no-resolve
-
-  - RULE-SET,Facebook_IP,Facebook,no-resolve
-
-  - RULE-SET,Apple_IP,Apple,no-resolve
-
   - RULE-SET,Private_域,🌐 本机·本地直连
   - RULE-SET,Private_IP,🌐 本机·本地直连,no-resolve
 
