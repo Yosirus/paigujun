@@ -126,14 +126,14 @@ proxies:
   - {name: DNS_Hijack, type: dns}
   - name: WG
     type: wireguard
-    private-key: qKDYXId7OgIi2yBuTu5gLK6xqMNOpzlfqBwdAfTqmEI=
+    private-key: 
     server: "dthv6.v6.army"
     port: 23366
     ip: 192.168.10.10/31
     #ipv6: fd01:5ca1:ab1e:80fa:ab85:6eea:213f:f4a5
-    public-key: OH2ooQhBbijLZoeFTe+Yl9+PKwEVtREnyTUI7eKJKno=
+    public-key: 
     allowed-ips: ['0.0.0.0/0']
-    pre-shared-key: /BEh0vvCwRLaHTt4Z+WSBzoe6N46e7WAEpHC3nlF8Js=
+    pre-shared-key: 
   # reserved: [209,98,59]  # 字符串格式也是合法的，如"U4An"
   # persistent-keepalive: 0
     udp: true
