@@ -2,10 +2,21 @@
 # 如不会配置，也可自行寻找懒人配置，例如(Surfing 模块配置)：https://raw.githubusercontent.com/GitMetaio/Surfing/refs/heads/main/box_bll/clash/config.yaml
 
 proxy-providers:
-  proxy1:
+  1.西部数据:
     type: http
-    url: ""
-    path: ./proxy_provider/proxy1.yaml
+    url: "https://api.wd-purple.com/sub?target=clash&emoji=true&udp=true&scv=true&new_name=true&filename=WestData&url=https%3A%2F%2Fwd-purple.com%2Fsubscribe%2Febrbxg-frpv_7sg-6rrtw2jv"
+    path: ./proxy_provider/providers-1.yaml
+    interval: 3600
+    health-check:
+      enable: true
+      url: https://cp.cloudflare.com
+      interval: 300
+      timeout: 1000
+      tolerance: 100
+  2.XF无限时间:
+    type: http
+    url: "https://sub.xfltd.cfd/cctv/user/client/get?token=9ed03b63230ed5c6519a9b955d000a7b"
+    path: ./proxy_provider/providers-2.yaml
     interval: 3600
     health-check:
       enable: true
@@ -37,9 +48,16 @@ unified-delay: true
 tcp-concurrent: true
 log-level: error
 find-process-mode: always
+geox-url:
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb"
+geo-auto-update: true # 是否自动更新 geodata
+geo-update-interval: 24 # 更新间隔，单位：小时
 global-client-fingerprint: random
 external-controller: 0.0.0.0:9090
-external-ui: ./zashboard
+external-ui: ./dashboard
+
 
 profile:
   store-selected: true
@@ -47,7 +65,6 @@ profile:
 
 sniffer:
   enable: true
-  override-destination: false
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -56,137 +73,198 @@ sniffer:
       ports: [443, 8443]
     QUIC:
       ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
 
 tun:
-  exclude-uid: [1000,1001,1002,1027,1068,10006,10020,10028,10041,10043,10045,10050,10053,10057,10069,10075,10077,10078,10079,10080,10081,10082,10083,10084,10085,10086,10087,10088,10089,10090,10091,10093,10095,10096,10097,10098,10099,10100,10101,10102,10103,10104,10105,10106,10107,10108,10109,10110,10112,10114,10115,10120,10121,10122,10123,10124,10125,10126,10127,10128,10129,10130,10131,10132,10133,10134,10135,10136,10137,10138,10139,10140,10141,10143,10144,10145,10146,10147,10148,10149,10150,10151,10153,10154,10155,10157,10158,10159,10161,10162,10163,10164,10165,10166,10167,10168,10169,10170,10171,10172,10173,10175,10176,10177,10178,10179,10181,10182,10183,10185,10191,10193,10195,10197,10200,10201,10203,10204,10205,10206,10207,10208,10209,10210,10213,10214,10216,10218,10219,10222,10226,10229,10231,10232,10233,10234,10235,10236,10237,10238,10240,10241,10244,10248,10249,10261,10262,10263,10264,10265,10266,10267,10268,10269,10270,10271,10272,10273,10274,10275,10276,10277,10278,10279,10280,10281,10282,10283,10284,10285,10286,10287,10288,10289,10290,10291,10292,10293,10294,10295,10296,10298,10299,10300,10301,10302,10303,10305,10306,10307,10308,10309,10310,10311,10313,10314,10316,10317,10318,10320,10321,10322,10323,10324,10325,10326,10327,10328,10329,10330,10331,10333,10336,10337,10338,10339,10341,10345,10346,10347,10349,10350,10351,10353,10355,10356,10358,10359,10360,10362,10363,10364,10365,10366,10367,10368,10369,10370,10373,10376,10377,10379,10382,10383,10386,10395,10396,10400,10402,10403,10405,10406,10407,10408,10410,10418,10420,10421,10422,10424,10425,10426,10433,10434,10435,10436,10437,10438,10439,10441,10442,10443,10444,10445,10446,10447,10448,10449,10450,10451,10452,10455,10456,10457,10458,10459,10460,10463,10464,10465,10468,10470,10471,10474,10475,10479,10482,10483,10484,10485,10486,10488,10491,10492,10493,10494,10495,10496,10497,10503,10504,10506,10507,10510,10511,10512,10515,10516,10517,10523,10524,10525,10526,10527,10528,10529,10530,10531,10532,10533,10534,99901000,99910248,99910330,99910400,99910515]
+  exclude-uid: [10041,10112,10266,10303,10306,10311,10320,10321,10322,10325,10329,10330,10331,10345,10355,10370,10435,10444,99910330]
   enable: true
   device: meta
   stack: mixed
   dns-hijack: [any:53, tcp://any:53]
   udp-timeout: 300
   auto-route: true
-  auto-redirect: false
+  auto-redirect: true
   auto-detect-interface: true
-  strict-route: false
 
 dns:
   enable: true
-  ipv6: true
+  cache-algorithm: arc
+  prefer-h3: false
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: false
   listen: 0.0.0.0:1053
-  enhanced-mode: fake-ip
+  ipv6: true
+  enhanced-mode: redir-host
   fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
   fake-ip-filter:
     - "rule-set:Fake-IP-Filter"
-  proxy-server-nameserver:
+  nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
-  nameserver-policy:
-    "rule-set:cn_domain":
-      - https://doh.pub/dns-query
-      - https://dns.alidns.com/dns-query
-  nameserver:
-    - https://cloudflare-dns.com/dns-query#代理
-    - https://dns.google/dns-query#代理
+  fallback:
+    - https://doh.dns.sb/dns-query
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.twnic.tw/dns-query
+    - tls://8.8.4.4:853
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+    ipcidr:
+      - 240.0.0.0/4
+    domain:
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
 
 proxies:
   - {name: DNS_Hijack, type: dns}
+  - name: WG
+    type: wireguard
+    private-key: qKDYXId7OgIi2yBuTu5gLK6xqMNOpzlfqBwdAfTqmEI=
+    server: "dthv6.v6.army"
+    port: 23366
+    ip: 192.168.10.10/31
+    #ipv6: fd01:5ca1:ab1e:80fa:ab85:6eea:213f:f4a5
+    public-key: OH2ooQhBbijLZoeFTe+Yl9+PKwEVtREnyTUI7eKJKno=
+    allowed-ips: ['0.0.0.0/0']
+    pre-shared-key: /BEh0vvCwRLaHTt4Z+WSBzoe6N46e7WAEpHC3nlF8Js=
+  # reserved: [209,98,59]  # 字符串格式也是合法的，如"U4An"
+  # persistent-keepalive: 0
+    udp: true
+  # dialer-proxy: "ss1"  # 一个出站代理的标识。当值不为空时，将使用指定的 proxy/proxy-group 发出连接
+    remote-dns-resolve: true # 强制dns远程解析，默认值为false
+    dns: ["192.168.3.99"] # 仅在remote-dns-resolve为true时生效
+    
 
 proxy-groups:
   - name: 国外代理
+    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/All.svg"
     type: select
-    exclude-type: "dns"
-    icon: https://ghfast.top/raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Proxy.png
     proxies:
       - ALL·狮城地区
       - ALL·中国台湾
       - ALL·香港地区
-      - ALL·日本地区      
+      - ALL·日本地区
       - ALL·美国地区
       - ALL·其它地区
+      - 国内直连
   
-  - name: ALL·日本地区
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/JP.svg"
-    filter: "^(?=.*(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan)).*$"
-    type: url-test
-    include-all: true
-    interval: 300
-    lazy: true
-    timeout: 3000
-    max-failed-times: 5
-    expected-status: 204
-    url: 'https://www.gstatic.com/generate_204'
-
-  - name: ALL·中国台湾
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/CN.svg"
-    filter: "^(?=.*(台|新北|彰化|TW|Taiwan|taipei)).*$"
-    type: url-test
-    include-all: true
-    interval: 300
-    lazy: true
-    timeout: 3000
-    max-failed-times: 5
-    expected-status: 204
-    url: 'https://www.gstatic.com/generate_204'
-
-  - name: ALL·香港地区
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/HK.svg"
-    filter: "^(?=.*(港|HK|hk|Hong Kong|HongKong|hongkong)).*$"
-    type: url-test
-    include-all: true
-    interval: 300
-    lazy: true
-    timeout: 3000
-    max-failed-times: 5
-    expected-status: 204
-    url: 'https://www.gstatic.com/generate_204'
-
-  - name: ALL·美国地区
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/US.svg"
-    filter: "^(?=.*(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)).*$"
-    type: url-test
-    include-all: true
-    interval: 300
-    lazy: true
-    timeout: 3000
-    max-failed-times: 5
-    expected-status: 204
-    url: 'https://www.gstatic.com/generate_204'
-
-  - name: ALL·狮城地区
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Singapore.svg"
-    filter: "^(?=.*(新加坡|坡|狮城|SG|Singapore)).*$"
-    type: url-test
-    include-all: true
-    interval: 300
-    lazy: true
-    timeout: 3000
-    max-failed-times: 5
-    expected-status: 204
-    url: 'https://www.gstatic.com/generate_204'
-
-  - name: ALL·其它地区
-    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Globe.svg"
-    filter: "^(?!.*(港|HK|hk|Hong Kong|HongKong|hongkong|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|台|新北|彰化|TW|Taiwan|新加坡|坡|狮城|SG|Singapore|灾|网易|Netease|套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|拒绝|DNS|Ch|网址|售|防失)).*$"
-    type: url-test
-    include-all: true
-    interval: 300
-    lazy: true
-    timeout: 3000
-    max-failed-times: 5
-    expected-status: 204
-    url: 'https://www.gstatic.com/generate_204'
-
   - name: 国内直连
     type: select
     proxies: [DIRECT]
     include-all: true
     exclude-type: "dns"
-    icon: https://ghfast.top/raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/China.png
-
+    icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/China.png
+  
+  - name: WireGuard
+    type: select
+    icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/China_Map.png
+    proxies:
+      - WG
+      - 国外代理
+      - 国内直连
+  
+  - name: 电报信息
+    type: select
+    proxies:
+      - ALL·狮城地区
+      - ALL·中国台湾
+      - ALL·香港地区
+      - ALL·日本地区
+      - ALL·美国地区
+      - ALL·其它地区
+      - 国外代理
+      - 国内直连
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
+  
   - name: 漏网之鱼
     type: select
     proxies: [国外代理,国内直连]
-    icon: https://ghfast.top/raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Final.png
+    icon: https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Final.png
+  
+  - name: ALL·日本地区
+    type: url-test
+    include-all: true
+    url: http://connectivitycheck.platform.hicloud.com/generate_204
+    interval: 300
+    lazy: true
+    tolerance: 50
+    timeout: 2000
+    disable-udp: false
+    max-failed-times: 3
+    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/JP.svg"
+    filter: "^(?=.*(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan)).*$"
+
+  - name: ALL·中国台湾
+    type: url-test
+    include-all: true
+    url: http://connectivitycheck.platform.hicloud.com/generate_204
+    interval: 300
+    lazy: true
+    tolerance: 50
+    timeout: 2000
+    disable-udp: false
+    max-failed-times: 3
+    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/CN.svg"
+    filter: "^(?=.*(台|新北|彰化|TW|Taiwan|taipei)).*$"
+
+  - name: ALL·香港地区
+    type: url-test
+    include-all: true
+    url: http://connectivitycheck.platform.hicloud.com/generate_204
+    interval: 300
+    lazy: true
+    tolerance: 50
+    timeout: 2000
+    disable-udp: false
+    max-failed-times: 3
+    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/HK.svg"
+    filter: "^(?=.*(港|HK|hk|Hong Kong|HongKong|hongkong)).*$"
+
+  - name: ALL·美国地区
+    type: url-test
+    include-all: true
+    url: http://connectivitycheck.platform.hicloud.com/generate_204
+    interval: 300
+    lazy: true
+    tolerance: 50
+    timeout: 2000
+    disable-udp: false
+    max-failed-times: 3
+    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/US.svg"
+    filter: "^(?=.*(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)).*$"
+
+  - name: ALL·狮城地区
+    type: url-test
+    include-all: true
+    url: http://connectivitycheck.platform.hicloud.com/generate_204
+    interval: 300
+    lazy: true
+    tolerance: 50
+    timeout: 2000
+    disable-udp: false
+    max-failed-times: 3
+    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Singapore.svg"
+    filter: "^(?=.*(新加坡|坡|狮城|SG|Singapore)).*$"
+
+  - name: ALL·其它地区
+    type: url-test
+    include-all: true
+    url: http://connectivitycheck.platform.hicloud.com/generate_204
+    interval: 300
+    lazy: true
+    tolerance: 50
+    timeout: 2000
+    disable-udp: false
+    max-failed-times: 3
+    icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@rm/Home/icon/Globe.svg"
+    filter: "^(?!.*(港|HK|hk|Hong Kong|HongKong|hongkong|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|台|新北|彰化|TW|Taiwan|新加坡|坡|狮城|SG|Singapore|灾|网易|Netease|套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|拒绝|DNS|Ch|网址|售|防失)).*$"
 
 rule-providers:
   Fake-IP-Filter:
@@ -204,6 +282,22 @@ rule-providers:
     interval: 86400
     path: ./rule_provider/proxy_domain.mrs
     url: "https://ghfast.top/github.com/DustinWin/ruleset_geodata/raw/refs/heads/mihomo-ruleset/proxy.mrs"
+    proxy: DIRECT
+  telegram_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://ruleset.skk.moe/Clash/non_ip/telegram.txt
+    path: ./rule_provider/telegram_non_ip.txt
+    proxy: DIRECT
+  telegram_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://ruleset.skk.moe/Clash/ip/telegram.txt
+    path: ./rule_provider/telegram_ip.txt
     proxy: DIRECT
   cn_ip:
     type: http
@@ -240,6 +334,10 @@ rule-providers:
   
 rules:
   - DST-PORT,53,DNS_Hijack
+  - IP-CIDR,192.168.1.0/24,WireGuard,no-resolve
+  - IP-CIDR,192.168.3.0/24,WireGuard,no-resolve
+  - RULE-SET,telegram_non_ip,电报信息
+  - RULE-SET,telegram_ip,电报信息
   - RULE-SET,proxy_domain,国外代理
   - OR,((RULE-SET,cn_ip),(RULE-SET,cn_domain),(RULE-SET,private_ip),(RULE-SET,private_domain)),国内直连
   - MATCH,漏网之鱼
