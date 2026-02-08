@@ -5,7 +5,7 @@ proxy-providers:
   1.西部数据:
     type: http
     url: ""
-    path: ./proxy_provider/providers-1.yaml
+    #path: ./proxy_provider/providers-1.yaml
     interval: 3600
     health-check:
       enable: true
@@ -19,7 +19,7 @@ proxy-providers:
   2.XF无限时间:
     type: http
     url: ""
-    path: ./proxy_provider/providers-2.yaml
+    #path: ./proxy_provider/providers-2.yaml
     interval: 3600
     health-check:
       enable: true
