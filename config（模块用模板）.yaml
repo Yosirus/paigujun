@@ -5,7 +5,7 @@ proxy-providers:
   1.西部数据:
     type: http
     url: "https://api.wd-purple.com/sub?target=clash&emoji=true&udp=true&scv=true&new_name=true&filename=WestData&url=https%3A%2F%2Fwd-purple.com%2Fsubscribe%2Febrbxg-frpv_7sg-6rrtw2jv"
-    path: ./proxy_provider/providers-1.yaml
+    #path: ./proxy_provider/providers-1.yaml
     interval: 3600
     health-check:
       enable: true
@@ -16,7 +16,7 @@ proxy-providers:
   2.XF无限时间:
     type: http
     url: "https://sub.xfltd.cfd/cctv/user/client/get?token=9ed03b63230ed5c6519a9b955d000a7b"
-    path: ./proxy_provider/providers-2.yaml
+    #path: ./proxy_provider/providers-2.yaml
     interval: 3600
     health-check:
       enable: true
@@ -64,7 +64,7 @@ profile:
   store-fake-ip: true
 
 sniffer:
-  enable: true
+  enable: false
   sniff:
     HTTP:
       ports: [80, 8080-8880]
