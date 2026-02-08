@@ -72,7 +72,7 @@ profile:
   store-fake-ip: true
 
 sniffer:
-  enable: true
+  enable: false
   override-destination: true
   sniff:
     HTTP:
