@@ -1,0 +1,17 @@
+
+# 稍微收敛缓冲区，兼顾路由器内存安全
+net.core.rmem_max = 33554432
+net.core.wmem_max = 33554432
+net.ipv4.tcp_rmem = 4096 87380 33554432
+net.ipv4.tcp_wmem = 4096 65536 33554432
+
+# 提高并发处理能力
+net.netfilter.nf_conntrack_max = 1000000
+net.netfilter.nf_conntrack_tcp_timeout_established = 1200
+
+# 开启 BBR (OpenWrt 内核通常已内置)
+net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+
+# 减少处于 FIN-WAIT-2 状态的时间，加快连接回收
+net.ipv4.tcp_fin_timeout = 30
